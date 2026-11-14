@@ -1,0 +1,15 @@
+material Mapping/Features
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture features.png
+      }
+    }
+  }
+}

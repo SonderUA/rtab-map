@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>omnicopter_slam</name>
+  <version>0.1.0</version>
+  <description>Gazebo RGB-D mapping integration and C++ demonstration for Omnicopter v1.0.</description>
+  <maintainer email="maintainer@example.com">Project maintainer</maintainer>
+  <license>See source package license declarations</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>std_srvs</depend>
+  <depend>omni_firmware</depend>
+  <depend>maneuver</depend>
+  <exec_depend>controller</exec_depend>
+  <exec_depend>uav_simulator</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>rtabmap_odom</exec_depend>
+  <exec_depend>rtabmap_slam</exec_depend>
+  <exec_depend>rtabmap_viz</exec_depend>
+</package>

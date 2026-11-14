@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+source /opt/ros/noetic/setup.bash
+cd /home/omni/ws
+# v1.0 omits some message-generation target dependencies. Generate the
+# interfaces before compiling their consumers, without changing flight code.
+catkin_make -j"${BUILD_JOBS:-2}" -l2 --make-args \
+    omni_firmware_generate_messages_cpp maneuver_generate_messages_cpp \
+    controller_generate_messages_cpp mav_msgs_generate_messages_cpp
+catkin_make -j"${BUILD_JOBS:-2}" -l2

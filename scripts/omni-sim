@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+source /opt/ros/noetic/setup.bash
+source /home/omni/ws/devel/setup.bash
+exec roslaunch omnicopter_slam simulate.launch \
+    database_path:="${OMNI_DATABASE:-/home/omni/.ros/omnicopter.db}" \
+    "$@" > /tmp/omnicopter.log 2>&1

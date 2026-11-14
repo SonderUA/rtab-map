@@ -1,0 +1,25 @@
+<launch>
+  <arg name="slam" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="paused" default="true"/>
+  <arg name="database_path" default="$(env HOME)/.ros/omnicopter.db"/>
+  <param name="use_sim_time" value="true"/>
+  <env name="GAZEBO_MODEL_PATH" value="$(find uav_simulator)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find uav_simulator)/worlds/mapping.world"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+  <node name="adapter" pkg="uav_simulator" type="adapter_node" args="omnicopter" output="screen"/>
+  <include file="$(find controller)/launch/control.launch"/>
+  <include file="$(find maneuver)/launch/maneuver.launch"/>
+  <!-- Match the v1.0 SDF mass: body + IMU link + eight rotors. -->
+  <param name="/controller/controller_gains/weight" value="2.87" type="double"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="camera_mount"
+        args="0.65 0 0.20 0 0 0 base_link mapping_camera_link"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="camera_optical_axes"
+        args="0 0 0 -1.57079632679 0 -1.57079632679 mapping_camera_link mapping_camera_optical_frame"/>
+  <include if="$(arg slam)" file="$(find omnicopter_slam)/launch/rtabmap.launch">
+    <arg name="database_path" value="$(arg database_path)"/>
+  </include>
+</launch>

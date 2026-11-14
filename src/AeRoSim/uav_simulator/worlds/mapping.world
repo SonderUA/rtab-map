@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.4">
+  <world name="default">
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="ground_link">
+        <collision name="ground_collision">
+          <geometry>
+            <box>
+              <size>20 20 0.1</size>
+            </box>
+          </geometry>
+          <pose>0 0 -0.05 0 0 0</pose>
+        </collision>
+        <visual name="ground_visual">
+          <geometry>
+            <box>
+              <size>20 20 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>0 0 -0.05 0 0 0</pose>
+        </visual>
+      </link>
+    </model>
+    <model name="middle_wall_with_opening">
+      <static>true</static>
+      <link name="wall_link">
+        <collision name="left_wall_part">
+          <geometry>
+            <box>
+              <size>9.6 1 5</size>
+            </box>
+          </geometry>
+          <pose>-5.25 -6.0 2.5 0 0 0</pose>
+        </collision>
+        <visual name="left_wall_visual">
+          <geometry>
+            <box>
+              <size>9.6 1 5</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>-5.25 -6.0 2.5 0 0 0</pose>
+        </visual>
+        <collision name="right_wall_part">
+          <geometry>
+            <box>
+              <size>9.6 1 5</size>
+            </box>
+          </geometry>
+          <pose>5.45 -6.0 2.5 0 0 0</pose>
+        </collision>
+        <visual name="right_wall_visual">
+          <geometry>
+            <box>
+              <size>9.6 1 5</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>5.45 -6.0 2.5 0 0 0</pose>
+        </visual>
+      </link>
+    </model>
+    <model name="top_wall">
+      <static>true</static>
+      <link name="wall_link">
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>20 0.2 5</size>
+            </box>
+          </geometry>
+          <pose>0 10 2.5 0 0 0</pose>
+        </collision>
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>20 0.2 5</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>0 10 2.5 0 0 0</pose>
+        </visual>
+      </link>
+    </model>
+    <model name="bottom_wall">
+      <static>true</static>
+      <link name="wall_link">
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>20 0.2 5</size>
+            </box>
+          </geometry>
+          <pose>0 -10 2.5 0 0 0</pose>
+        </collision>
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>20 0.2 5</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>0 -10 2.5 0 0 0</pose>
+        </visual>
+      </link>
+    </model>
+    <model name="left_wall">
+      <static>true</static>
+      <link name="wall_link">
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>0.2 20 5</size>
+            </box>
+          </geometry>
+          <pose>-10 0 2.5 0 0 0</pose>
+        </collision>
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>0.2 20 5</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>-10 0 2.5 0 0 0</pose>
+        </visual>
+      </link>
+    </model>
+    <model name="right_wall">
+      <static>true</static>
+      <link name="wall_link">
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>0.2 20 5</size>
+            </box>
+          </geometry>
+          <pose>10 0 2.5 0 0 0</pose>
+        </collision>
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>0.2 20 5</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>10 0 2.5 0 0 0</pose>
+        </visual>
+      </link>
+    </model>
+    <model name="wall_at_pose_0_5.5_5">
+      <static>true</static>
+      <link name="wall_link">
+        <collision name="wall_collision">
+          <geometry>
+            <box>
+              <size>20 1.2 1.5</size>
+            </box>
+          </geometry>
+          <pose>0 6 4.15 0 0 0</pose>
+        </collision>
+        <visual name="wall_visual">
+          <geometry>
+            <box>
+              <size>20 1.2 1.5</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>0 6 4.15 0 0 0</pose>
+        </visual>
+      </link>
+    </model>
+    <model name="center_cube">
+      <static>true</static>
+      <link name="cube_link">
+        <collision name="cube_collision">
+          <geometry>
+            <box>
+              <size>3.0 3.0 3.0</size>
+            </box>
+          </geometry>
+          <pose>0 0 1.5 0 0 0</pose>
+        </collision>
+        <visual name="cube_visual">
+          <geometry>
+            <box>
+              <size>3.0 3.0 3.0</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://mapping_materials/materials/scripts</uri>
+              <uri>model://mapping_materials/materials/textures</uri>
+              <name>Mapping/Features</name>
+            </script>
+          </material>
+          <pose>0 0 1.5 0 0 0</pose>
+        </visual>
+      </link>
+      <pose>4 0 0 0 0 0</pose>
+    </model>
+    <include>
+      <uri>model://omnicopter</uri>
+    </include>
+    <include>
+      <uri>model://triangle_wall</uri>
+      <pose>0 5.5 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <gui>
+      <camera name="user_camera">
+        <pose>-7 -9 7 0 0.45 0.7</pose>
+      </camera>
+    </gui>
+    <physics type="ode">
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>100</iters>
+          <sor>1.0</sor>
+        </solver>
+        <constraints>
+          <cfm>0</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>100</contact_max_correcting_vel>
+          <contact_surface_layer>0.001</contact_surface_layer>
+        </constraints>
+      </ode>
+      <max_step_size>0.0025</max_step_size>
+      <real_time_update_rate>400</real_time_update_rate>
+      <gravity>0 0 -9.8</gravity>
+    </physics>
+  </world>
+</sdf>
