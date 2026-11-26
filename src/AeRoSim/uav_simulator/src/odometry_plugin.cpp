@@ -35,7 +35,16 @@ public: void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
 			
     sequence = 0;
 	
-    std::string topicName = namespc + "/odometry" ;
+    // Legacy worlds keep their original topic. The mapping launch opts out
+    // by default and enables a separate topic only for validation runs.
+    const std::string parameter_namespace = "/" + namespc;
+    bool publish_ground_truth;
+    nh.param(parameter_namespace + "/publish_ground_truth", publish_ground_truth, true);
+    if (!publish_ground_truth)
+      return;
+
+    std::string topicName = namespc + "/odometry";
+    nh.param(parameter_namespace + "/ground_truth_topic", topicName, topicName);
 
     odometry_pub = nh.advertise<nav_msgs::Odometry>(topicName, 1); 
 	

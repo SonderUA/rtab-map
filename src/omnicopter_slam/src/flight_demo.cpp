@@ -4,22 +4,23 @@
 #include <maneuver/ArmDisarm.h>
 #include <maneuver/LiftOff.h>
 #include <maneuver/GotoPoint.h>
+#include <maneuver/Goto6DPoint.h>
 #include <maneuver/RotateTo.h>
 #include <maneuver/Land.h>
 
 #include <mutex>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
-// Optional service client: flight and trajectory generation remain in the
-// original v1.0 nodes. This program requests a short observation route.
+// The maneuver node plans each leg from the current estimated pose.
 class FlightDemo {
  public:
   FlightDemo() {
     pose_sub_ = nh_.subscribe("/pose_full", 1, &FlightDemo::onPose, this);
   }
 
-  void run() {
+  void run(bool six_dof) {
     bool simulation_time = false;
     nh_.getParam("/use_sim_time", simulation_time);
     if (!simulation_time)
@@ -38,7 +39,7 @@ class FlightDemo {
         }
       }
       if (ros::WallTime::now() > deadline)
-        throw std::runtime_error("No simulator pose received.");
+        throw std::runtime_error("No fused camera/IMU pose received.");
       ros::WallDuration(0.05).sleep();
     }
     if (!ros::ok()) return;
@@ -54,27 +55,16 @@ class FlightDemo {
     accepted(takeoff.response.status, "lift_off");
     waitSim(11);
 
-    goTo(0, -1);
-    goTo(1, -1);
-    const double pi = 3.141592653589793;
-    ROS_INFO("Turning to observe the surroundings.");
-    for (double heading : {pi / 2, pi, -pi / 2, 0.0}) {
-      maneuver::RotateTo turn;
-      turn.request.roll = 0;
-      turn.request.pitch = 0;
-      turn.request.yaw = heading;
-      turn.request.duration = 7.0;
-      invoke("/rotate_to", turn);
-      accepted(turn.response.status, "rotate_to");
-      waitSim(10);
-    }
-    goTo(0, 0);
+    if (six_dof)
+      flySixDofRoute();
+    else
+      flyObservationRoute();
 
     ROS_INFO("Landing.");
     maneuver::Land land;
     land.request.height_1 = 0.5;
     land.request.duration_1 = 4;
-    land.request.height_2 = 0.2;
+    land.request.height_2 = 0.05;
     land.request.duration_2 = 4;
     invoke("/land", land);
     accepted(land.response.status, "land");
@@ -108,8 +98,60 @@ class FlightDemo {
     if (!ros::ok()) throw std::runtime_error("ROS stopped.");
   }
 
+  void flyObservationRoute() {
+    goTo(0, -1);
+    goTo(1, -1);
+    const double pi = 3.141592653589793;
+    ROS_INFO("Turning to observe the surroundings.");
+    for (double heading : {pi / 2, pi, -pi / 2, 0.0}) {
+      maneuver::RotateTo turn;
+      turn.request.roll = 0;
+      turn.request.pitch = 0;
+      turn.request.yaw = heading;
+      turn.request.duration = 7.0;
+      invoke("/rotate_to", turn);
+      accepted(turn.response.status, "rotate_to");
+      waitSim(10);
+    }
+    goTo(0, 0);
+  }
+
+  void flySixDofRoute() {
+    struct Waypoint {
+      float x, y, z;
+      float roll, pitch, yaw;
+      float seconds;
+    };
+    const Waypoint route[] = {
+        { 0.65f, -0.85f, 1.65f,  0.26f, -0.20f,  0.60f, 5.5f},
+        {-0.80f, -1.15f, 2.05f, -0.33f,  0.27f, -0.75f, 6.0f},
+        {-1.10f,  0.60f, 1.00f,  0.35f, -0.29f,  0.95f, 6.0f},
+        { 0.65f,  0.95f, 1.85f, -0.28f,  0.25f, -0.95f, 6.0f},
+        { 0.30f, -0.45f, 0.90f,  0.20f, -0.18f,  0.55f, 5.0f},
+        { 0.00f,  0.00f, 1.20f,  0.00f,  0.00f,  0.00f, 5.0f},
+    };
+
+    ROS_INFO("Starting the six-degree-of-freedom stress test.");
+    for (const auto& waypoint : route) {
+      ROS_INFO("Target XYZ (%.2f, %.2f, %.2f) m, RPY (%.2f, %.2f, %.2f) rad in %.1f s.",
+               waypoint.x, waypoint.y, waypoint.z, waypoint.roll, waypoint.pitch,
+               waypoint.yaw, waypoint.seconds);
+      maneuver::Goto6DPoint target;
+      target.request.x = waypoint.x;
+      target.request.y = waypoint.y;
+      target.request.z = waypoint.z;
+      target.request.roll = waypoint.roll;
+      target.request.pitch = waypoint.pitch;
+      target.request.yaw = waypoint.yaw;
+      target.request.duration = waypoint.seconds;
+      invoke("/go_to_6D", target);
+      accepted(target.response.status, "go_to_6D");
+      waitSim(waypoint.seconds + 1.5);
+    }
+  }
+
   void goTo(double x, double y) {
-    ROS_INFO("Moving to (%.1f, %.1f, 1.2) in the simulator world frame.", x, y);
+    ROS_INFO("Moving to (%.1f, %.1f, 1.2) in the visual odometry frame.", x, y);
     maneuver::GotoPoint target;
     target.request.x = x;
     target.request.y = y;
@@ -136,13 +178,20 @@ class FlightDemo {
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "flight_demo");
+  std::vector<std::string> args;
+  ros::removeROSArgs(argc, argv, args);
+  const bool six_dof = args.size() == 2 && args[1] == "--six-dof";
+  if (args.size() > 1 && !six_dof) {
+    ROS_ERROR("Usage: flight_demo [--six-dof]");
+    return 1;
+  }
   try {
     FlightDemo demo;
     // Stop callback threads before destroying the subscriber's pose storage,
     // including when a service fails and the scope exits through an exception.
     ros::AsyncSpinner spinner(1);
     spinner.start();
-    demo.run();
+    demo.run(six_dof);
     return 0;
   } catch (const std::exception& error) {
     ROS_ERROR("%s", error.what());

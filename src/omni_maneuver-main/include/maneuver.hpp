@@ -73,7 +73,7 @@ public:
 	double end_time;
 	int period;
 	bool Armed = false;
-	bool first_pose_received;
+	bool first_pose_received = false;
 	bool log_data_flag;
 	double lift_off_time = 2;
 	double lift_off_height = 1;

@@ -21,6 +21,7 @@
   <build_export_depend>mav_msgs</build_export_depend>
 	<build_depend>aerosim_comm</build_depend>
   <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_plugins</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>dynamic_reconfigure</exec_depend>

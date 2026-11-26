@@ -80,7 +80,7 @@ void Maneuver::log_data() {
 bool Maneuver::lift_off_callback(maneuver::LiftOff::Request &req, maneuver::LiftOff::Response &res) {
 	double height = req.height;
 	double duration = req.duration;
-	if(this->lift_off_flag || !Armed) {
+	if(this->lift_off_flag || !Armed || !this->first_pose_received) {
 		res.status = false;
 		return false;
 	} else {

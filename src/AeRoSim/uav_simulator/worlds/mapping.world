@@ -50,7 +50,7 @@
             <script>
               <uri>model://mapping_materials/materials/scripts</uri>
               <uri>model://mapping_materials/materials/textures</uri>
-              <name>Mapping/Features</name>
+              <name>Mapping/PartitionWest</name>
             </script>
           </material>
           <pose>-5.25 -6.0 2.5 0 0 0</pose>
@@ -73,7 +73,7 @@
             <script>
               <uri>model://mapping_materials/materials/scripts</uri>
               <uri>model://mapping_materials/materials/textures</uri>
-              <name>Mapping/Features</name>
+              <name>Mapping/PartitionEast</name>
             </script>
           </material>
           <pose>5.45 -6.0 2.5 0 0 0</pose>
@@ -101,7 +101,7 @@
             <script>
               <uri>model://mapping_materials/materials/scripts</uri>
               <uri>model://mapping_materials/materials/textures</uri>
-              <name>Mapping/Features</name>
+              <name>Mapping/NorthWall</name>
             </script>
           </material>
           <pose>0 10 2.5 0 0 0</pose>
@@ -129,7 +129,7 @@
             <script>
               <uri>model://mapping_materials/materials/scripts</uri>
               <uri>model://mapping_materials/materials/textures</uri>
-              <name>Mapping/Features</name>
+              <name>Mapping/SouthWall</name>
             </script>
           </material>
           <pose>0 -10 2.5 0 0 0</pose>
@@ -157,7 +157,7 @@
             <script>
               <uri>model://mapping_materials/materials/scripts</uri>
               <uri>model://mapping_materials/materials/textures</uri>
-              <name>Mapping/Features</name>
+              <name>Mapping/WestWall</name>
             </script>
           </material>
           <pose>-10 0 2.5 0 0 0</pose>
@@ -185,7 +185,7 @@
             <script>
               <uri>model://mapping_materials/materials/scripts</uri>
               <uri>model://mapping_materials/materials/textures</uri>
-              <name>Mapping/Features</name>
+              <name>Mapping/EastWall</name>
             </script>
           </material>
           <pose>10 0 2.5 0 0 0</pose>
@@ -213,7 +213,7 @@
             <script>
               <uri>model://mapping_materials/materials/scripts</uri>
               <uri>model://mapping_materials/materials/textures</uri>
-              <name>Mapping/Features</name>
+              <name>Mapping/UpperPartition</name>
             </script>
           </material>
           <pose>0 6 4.15 0 0 0</pose>
@@ -241,7 +241,7 @@
             <script>
               <uri>model://mapping_materials/materials/scripts</uri>
               <uri>model://mapping_materials/materials/textures</uri>
-              <name>Mapping/Features</name>
+              <name>Mapping/CenterCube</name>
             </script>
           </material>
           <pose>0 0 1.5 0 0 0</pose>

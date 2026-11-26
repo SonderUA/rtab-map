@@ -1,0 +1,35 @@
+frequency: 50
+sensor_timeout: 0.2
+two_d_mode: false
+reset_on_time_jump: true
+
+# RGB-D frames arrive after image processing. Replay IMU measurements when
+# the visual update arrives with an older stamp.
+smooth_lagged_data: true
+history_length: 2.0
+
+# RTAB-Map can restart local registration from this prediction after
+# consecutive failures. The filter owns the odometry-to-body transform.
+odom_frame: visual_odom
+world_frame: visual_odom
+base_link_frame: base_link
+publish_tf: true
+
+# Measurement order: position, attitude, linear velocity, angular velocity,
+# linear acceleration, each in x/y/z order.
+odom0: odometry/visual
+odom0_config: [true, true, true,
+               true, true, true,
+               true, true, true,
+               false, false, false,
+               false, false, false]
+odom0_queue_size: 10
+
+imu0: imu/estimator
+imu0_config: [false, false, false,
+              false, false, false,
+              false, false, false,
+              true, true, true,
+              true, true, true]
+imu0_queue_size: 50
+imu0_remove_gravitational_acceleration: true

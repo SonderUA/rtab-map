@@ -2,15 +2,20 @@
   <arg name="slam" default="true"/>
   <arg name="gui" default="true"/>
   <arg name="paused" default="true"/>
+  <arg name="ground_truth" default="false"/>
   <arg name="database_path" default="$(env HOME)/.ros/omnicopter.db"/>
   <param name="use_sim_time" value="true"/>
+  <param name="/omnicopter/publish_ground_truth" value="$(arg ground_truth)" type="bool"/>
+  <param name="/omnicopter/ground_truth_topic" value="/omnicopter/ground_truth/odometry"/>
   <env name="GAZEBO_MODEL_PATH" value="$(find uav_simulator)/models:$(optenv GAZEBO_MODEL_PATH)"/>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find uav_simulator)/worlds/mapping.world"/>
     <arg name="paused" value="$(arg paused)"/>
     <arg name="gui" value="$(arg gui)"/>
   </include>
-  <node name="adapter" pkg="uav_simulator" type="adapter_node" args="omnicopter" output="screen"/>
+  <node name="adapter" pkg="uav_simulator" type="adapter_node" args="omnicopter" output="screen">
+    <remap from="omnicopter/odometry" to="/omnicopter/odometry/filtered"/>
+  </node>
   <include file="$(find controller)/launch/control.launch"/>
   <include file="$(find maneuver)/launch/maneuver.launch"/>
   <!-- Match the v1.0 SDF mass: body + IMU link + eight rotors. -->
@@ -19,7 +24,24 @@
         args="0.65 0 0.20 0 0 0 base_link mapping_camera_link"/>
   <node pkg="tf2_ros" type="static_transform_publisher" name="camera_optical_axes"
         args="0 0 0 -1.57079632679 0 -1.57079632679 mapping_camera_link mapping_camera_optical_frame"/>
-  <include if="$(arg slam)" file="$(find omnicopter_slam)/launch/rtabmap.launch">
+  <node pkg="tf2_ros" type="static_transform_publisher" name="imu_mount"
+        args="0 0 0 0 0 0 base_link imu_link"/>
+  <include file="$(find omnicopter_slam)/launch/rtabmap.launch">
     <arg name="database_path" value="$(arg database_path)"/>
+    <arg name="slam" value="$(arg slam)"/>
   </include>
+  <group ns="omnicopter">
+    <node pkg="omnicopter_slam" type="localization_inputs" name="localization_inputs" output="screen"/>
+    <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_attitude" output="screen">
+      <param name="use_mag" value="false"/>
+      <param name="publish_tf" value="false"/>
+      <param name="world_frame" value="enu"/>
+      <!-- Sustained translation during a turn should not pull tilt toward apparent gravity. -->
+      <param name="gain" value="0.005" type="double"/>
+      <param name="orientation_stddev" value="0.04" type="double"/>
+    </node>
+    <node pkg="robot_localization" type="ekf_localization_node" name="pose_filter" output="screen">
+      <rosparam command="load" file="$(find omnicopter_slam)/config/pose_filter.yaml"/>
+    </node>
+  </group>
 </launch>

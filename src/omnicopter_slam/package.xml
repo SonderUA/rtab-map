@@ -8,13 +8,21 @@
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend>
   <depend>std_srvs</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
   <depend>omni_firmware</depend>
   <depend>maneuver</depend>
   <exec_depend>controller</exec_depend>
   <exec_depend>uav_simulator</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
   <exec_depend>rtabmap_odom</exec_depend>
   <exec_depend>rtabmap_slam</exec_depend>
   <exec_depend>rtabmap_viz</exec_depend>
+  <exec_depend>robot_localization</exec_depend>
+  <exec_depend>imu_filter_madgwick</exec_depend>
 </package>

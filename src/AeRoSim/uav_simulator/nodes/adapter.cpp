@@ -64,6 +64,16 @@ void pose_cb(const nav_msgs::Odometry& msg){
 
 	pose_new.pose = msg.pose.pose;
 	pose_new.vel = msg.twist.twist;
+	// ROS odometry expresses twist in the child frame. FullPose expects
+	// world-frame linear velocity and body-frame angular velocity. Legacy
+	// simulator odometry leaves child_frame_id empty and already uses this convention.
+	if (!msg.child_frame_id.empty()) {
+		tf::Quaternion body_to_odom;
+		tf::quaternionMsgToTF(msg.pose.pose.orientation, body_to_odom);
+		tf::Vector3 linear_body;
+		tf::vector3MsgToTF(msg.twist.twist.linear, linear_body);
+		tf::vector3TFToMsg(tf::quatRotate(body_to_odom, linear_body), pose_new.vel.linear);
+	}
 	pose_pub.publish(pose_new);
 
 }

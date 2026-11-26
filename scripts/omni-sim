@@ -4,4 +4,5 @@ source /opt/ros/noetic/setup.bash
 source /home/omni/ws/devel/setup.bash
 exec roslaunch omnicopter_slam simulate.launch \
     database_path:="${OMNI_DATABASE:-/home/omni/.ros/omnicopter.db}" \
+    ground_truth:="${OMNI_GROUND_TRUTH:-false}" \
     "$@" > /tmp/omnicopter.log 2>&1

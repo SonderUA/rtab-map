@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates curl gnupg build-essential libeigen3-dev \
     ros-noetic-gazebo-ros-pkgs ros-noetic-cmake-modules ros-noetic-serial \
     ros-noetic-tf ros-noetic-dynamic-reconfigure ros-noetic-joy \
-    ros-noetic-rtabmap-ros \
+    ros-noetic-rtabmap-ros ros-noetic-robot-localization \
     xvfb xauth xterm x11-utils mesa-utils dbus-x11 \
     && rm -rf /var/lib/apt/lists/*
 

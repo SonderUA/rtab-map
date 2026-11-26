@@ -13,3 +13,163 @@ material Mapping/Features
     }
   }
 }
+
+material Mapping/PartitionWest
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture partition_west.png
+      }
+    }
+  }
+}
+
+material Mapping/PartitionEast
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture partition_east.png
+      }
+    }
+  }
+}
+
+material Mapping/NorthWall
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture north_wall.png
+      }
+    }
+  }
+}
+
+material Mapping/SouthWall
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture south_wall.png
+      }
+    }
+  }
+}
+
+material Mapping/WestWall
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture west_wall.png
+      }
+    }
+  }
+}
+
+material Mapping/EastWall
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture east_wall.png
+      }
+    }
+  }
+}
+
+material Mapping/UpperPartition
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture upper_partition.png
+      }
+    }
+  }
+}
+
+material Mapping/CenterCube
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture center_cube.png
+      }
+    }
+  }
+}
+
+material Mapping/TriangleLeft
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture triangle_left.png
+      }
+    }
+  }
+}
+
+material Mapping/TriangleRight
+{
+  technique
+  {
+    pass
+    {
+      ambient 0.8 0.8 0.8 1
+      diffuse 1 1 1 1
+      texture_unit
+      {
+        texture triangle_right.png
+      }
+    }
+  }
+}

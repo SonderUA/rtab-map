@@ -20,7 +20,7 @@
           <script>
             <uri>model://mapping_materials/materials/scripts</uri>
             <uri>model://mapping_materials/materials/textures</uri>
-            <name>Mapping/Features</name>
+            <name>Mapping/TriangleLeft</name>
           </script>
         </material>
       </visual>
@@ -41,7 +41,7 @@
           <script>
             <uri>model://mapping_materials/materials/scripts</uri>
             <uri>model://mapping_materials/materials/textures</uri>
-            <name>Mapping/Features</name>
+            <name>Mapping/TriangleRight</name>
           </script>
         </material>
       </visual>
